@@ -40,10 +40,9 @@ router.get('/gallery/:id', withAuth, async (req, res) => {
           attributes: [
             'id',
             'title',
-            'artist',
+            'blogger',
             'exhibition_date',
-            'filename',
-            'description',
+            'content',
           ],
         },
       ],
