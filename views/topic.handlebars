@@ -1,0 +1,10 @@
+<section class="container">
+  <h3 class="topic-name">{{topic.name}}</h3>
+  <section class="flex-row justify-center">
+    {{#each topic.paintings as |painting|}}
+    {{> painting-details}}
+    {{/each}}
+  </section>
+    <p>topic.handlebars</p>
+
+</section>

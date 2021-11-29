@@ -1,6 +1,6 @@
-const { Gallery } = require('../models');
+const { Topic } = require('../models');
 
-const gallerydata = [
+const topicdata = [
   {
     name: 'JavaScript',
     starting_date: 'April 20, 2021 07:00:00',
@@ -23,6 +23,6 @@ const gallerydata = [
   },
 ];
 
-const seedGallery = () => Gallery.bulkCreate(gallerydata);
+const seedTopic = () => Topic.bulkCreate(topicdata);
 
-module.exports = seedGallery;
+module.exports = seedTopic;
