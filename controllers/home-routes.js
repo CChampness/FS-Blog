@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
     const topics = dbTopicData.map((topic) =>
       topic.get({ plain: true })
     );
-
+console.log(topics);
     res.render('homepage', {
       topics,
       loggedIn: req.session.loggedIn,
@@ -41,7 +41,7 @@ router.get('/topic/:id', withAuth, async (req, res) => {
             'id',
             'title',
             'blogger',
-            'exhibition_date',
+            'post_date',
             'content',
           ],
         },
@@ -49,6 +49,7 @@ router.get('/topic/:id', withAuth, async (req, res) => {
     });
 
     const topic = dbTopicData.get({ plain: true });
+    console.log(topic);
     res.render('topic', { topic, loggedIn: req.session.loggedIn });
   } catch (err) {
     console.log(err);
