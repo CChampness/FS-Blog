@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Topic, Painting } = require('../models');
+const { Topic, Post } = require('../models');
 // Import the custom middleware
 const withAuth = require('../utils/auth');
 
@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
     const dbTopicData = await Topic.findAll({
       include: [
         {
-          model: Painting,
+          model: Post,
           attributes: ['content'],
         },
       ],
@@ -36,7 +36,7 @@ router.get('/topic/:id', withAuth, async (req, res) => {
     const dbTopicData = await Topic.findByPk(req.params.id, {
       include: [
         {
-          model: Painting,
+          model: Post,
           attributes: [
             'id',
             'title',
@@ -56,15 +56,15 @@ router.get('/topic/:id', withAuth, async (req, res) => {
   }
 });
 
-// GET one painting
-// Use the custom middleware before allowing the user to access the painting
-router.get('/painting/:id', withAuth, async (req, res) => {
+// GET one post
+// Use the custom middleware before allowing the user to access the post
+router.get('/post/:id', withAuth, async (req, res) => {
   try {
-    const dbPaintingData = await Painting.findByPk(req.params.id);
+    const dbPostData = await Post.findByPk(req.params.id);
 
-    const painting = dbPaintingData.get({ plain: true });
+    const post = dbPostData.get({ plain: true });
 
-    res.render('painting', { painting, loggedIn: req.session.loggedIn });
+    res.render('post', { post, loggedIn: req.session.loggedIn });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
