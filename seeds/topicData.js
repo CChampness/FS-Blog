@@ -22,7 +22,7 @@ const topicdata = [
     ending_date: 'March 19, 2021 19:00:00',
   },
 ];
-
+console.log("topicdata: ",topicdata);
 const seedTopic = () => Topic.bulkCreate(topicdata);
 
 module.exports = seedTopic;
