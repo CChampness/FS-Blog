@@ -36,21 +36,17 @@ console.log(topics);
 router.get('/dash', withAuth, async (req, res) => {
   try {
     console.log(">>>>>>>>>>>>>> dash route <<<<<<<<<<<<<<<<");
-    const dbTopicData = await Topic.findAll({
-      include: [
-         {
-          model: Post,
-          attributes: ['content'],
-        },
-      ],
+    const dbPostData = await Post.findAll({
+      attributes: ['id','title', 'blogger','post_date','content']
     });
+    console.log(">>>> /dash after Post.findAll <<<<");
 
-    const topics = dbTopicData.map((topic) =>
-      topic.get({ plain: true })
+    const posts = dbPostData.map((post) =>
+      post.get({ plain: true })
     );
-    console.log(topics);
+    console.log(">>>> /dash <<<<",posts);
     res.render('dash', {
-      topics,
+      posts,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {

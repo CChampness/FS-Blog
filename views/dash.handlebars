@@ -1,10 +1,7 @@
 <section class="container">
-  <h3 class="topic-name">Dashboard</h3>
-  <section class="flex-row justify-center">
-    {{#each topic.posts as |post|}}
-    {{> post-titles}}
-    {{/each}}
-  </section>
-    <p>dash.handlebars</p>
-
+<h3 class="topic-name">Dashboard</h3>
+{{#each posts as |post|}}
+{{> post-titles}}
+{{/each}}
+  <p>(dash.handlebars)</p>
 </section>
