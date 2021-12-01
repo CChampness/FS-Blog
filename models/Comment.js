@@ -19,8 +19,8 @@ Comment.init(
       type: DataTypes.DATE,
       allowNull: false,
     },
-    comment: {
-      type: DataTypes.STRING,
+    comment_text: {
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     post_id: {

@@ -1,4 +1,8 @@
 :root {
+  --bgcol: #3757a9;
+  --light-border: #e0eae4;
+  --dark-blue-green: #1b404e;
+
   --primary: #3d5852;
   --secondary: #86938f;
   --tertiary: #5e877f;
@@ -16,7 +20,8 @@ body {
   flex-direction: column;
   min-height: 100vh;
   justify-content: flex-start;
-  background-color: var(--quatrinary);
+  /* background-color: var(--quatrinary); */
+  background-color: var(--dark-blue-green);
 }
 
 a {
@@ -31,14 +36,17 @@ a:visited {
 header {
   padding: 40px;
   text-align: center;
-  background: var(--primary);
-  color: var(--light);
+  /* background: var(--primary); */
+  /* color: var(--light); */
+  background-color: #3757a9;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), var(--dark-blue-green));
 }
 
 main {
   display: flex;
   flex-wrap: wrap;
   flex-grow: 1;
+  background-color: var(--dark-blue-green);
 }
 
 aside {
@@ -51,7 +59,10 @@ aside {
 
 nav {
   display: flex;
-  background-color: var(--secondary);
+  /* background-color: var(--secondary); */
+  background-color: #3757a9;
+  background-image: linear-gradient(to top, rgba(255, 255, 255, 0.9), var(--dark-blue-green));
+
 }
 
 nav a {

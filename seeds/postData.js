@@ -59,7 +59,7 @@ const postdata = [
     post_date: 'December 24, 2020',
     topic_id: 4,
     content:
-      'Handlebars compiles templates into JavaScript functions. This makes the template execution faster than most other template engines.',
+      'Handlebars compiles templates into JavaScript functions. This makes the template execution faster than most other template engines. Testing a long post..........................................................................................................................................................',
   },
   {
     title: 'ExpressJS',
