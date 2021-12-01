@@ -3,7 +3,7 @@ const { Topic, Post } = require('../models');
 // Import the custom middleware
 const withAuth = require('../utils/auth');
 
-// GET all topicss for homepage
+// GET all topics for homepage
 router.get('/', async (req, res) => {
   try {
     const dbTopicData = await Topic.findAll({
