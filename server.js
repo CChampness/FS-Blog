@@ -34,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(routes);
 
+// Don't drop and recreate tables because we need them to be seeded
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening at port ', PORT));
 });
