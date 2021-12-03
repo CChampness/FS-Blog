@@ -3,6 +3,7 @@ const { User } = require('../../models');
 
 // CREATE new user
 router.post('/', async (req, res) => {
+  console.log(">>>>>>>>>> / route for CREATE NEW USER in user-routes.js <<<<<<<<<<<<<<<<<");
   try {
     const dbUserData = await User.create({
       username: req.body.username,
@@ -11,6 +12,7 @@ router.post('/', async (req, res) => {
     });
 
     req.session.save(() => {
+      // req.session.user_id = dbUserData.id;
       req.session.loggedIn = true;
 
       res.status(200).json(dbUserData);
@@ -23,6 +25,9 @@ router.post('/', async (req, res) => {
 
 // Login
 router.post('/login', async (req, res) => {
+  console.log(">>>>>>>>>>>>>>>>>>>>>>> /login route in user-routes.js  <<<<<<<<<<<<<<<<<");
+  console.log(">>>>>>>>>>>>>>>>>>>>>>> email:",req.body.email," <<<<<<<<<<<<<<<<<");
+  console.log(">>>>>>>>>>>>>>>>>>>>>>> password:",req.body.password," <<<<<<<<<<<<<<<<<");
   try {
     const dbUserData = await User.findOne({
       where: {
@@ -69,5 +74,27 @@ router.post('/logout', (req, res) => {
     res.status(404).end();
   }
 });
+
+// Create a comment
+// Use the custom middleware before allowing the user to access this route
+router.post('/newcomment', async (req, res) => {
+  console.log(">>>>>>>>>>>>>> newcomment post route <<<<<<<<<<<<<<<<");
+  try {
+    const dbCommentData = await Comment.create({
+      commenter: req.body.commenter,
+      comment_date: req.body.comment_date,
+      comment_text: req.body.comment_text,
+      post_id: req.body.post_id
+    });
+
+    // const post = dbPostData.get({ plain: true });
+    // console.log(post);
+    // res.render('post', { post, loggedIn: req.session.loggedIn });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 
 module.exports = router;

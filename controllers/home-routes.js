@@ -6,7 +6,7 @@ const withAuth = require('../utils/auth');
 // GET all topics for homepage
 router.get('/', async (req, res) => {
   try {
-    console.log(">>>>>>>>>> / route <<<<<<<<<<<<<<<<<");
+    console.log(">>>>>>>>>> / route in home-routes.js <<<<<<<<<<<<<<<<<");
 
     const dbTopicData = await Topic.findAll({
       include: [
@@ -35,7 +35,7 @@ console.log(topics);
 // Use the custom middleware before allowing the user to access the dash
 router.get('/dash', withAuth, async (req, res) => {
   try {
-    console.log(">>>>>>>>>>>>>> dash route <<<<<<<<<<<<<<<<");
+    console.log(">>>>>>>>>>>>>> /dash route in home-routes.js <<<<<<<<<<<<<<<<");
     const dbPostData = await Post.findAll({
       attributes: ['id','title', 'blogger','post_date','content']
     });
@@ -59,7 +59,7 @@ router.get('/dash', withAuth, async (req, res) => {
 // Use the custom middleware before allowing the user to access the topic
 router.get('/topic/:id', withAuth, async (req, res) => {
   try {
-    console.log(">>>>>>>>>>>>>>>>>> topic/:id route <<<<<<<<<<<<<<<<<<<<<");
+    console.log(">>>>>>>>>>>>>>>>>> /topic/:id route in home-routes.js  <<<<<<<<<<<<<<<<<<<<<");
     const dbTopicData = await Topic.findByPk(req.params.id, {
       include: [
         {
@@ -88,11 +88,23 @@ router.get('/topic/:id', withAuth, async (req, res) => {
 // Use the custom middleware before allowing the user to access the post
 router.get('/post/:id', withAuth, async (req, res) => {
   try {
-    console.log(">>>>>>>>>>>>>> post/:id route <<<<<<<<<<<<<<<<");
-    const dbPostData = await Post.findByPk(req.params.id);
+    console.log(">>>>>>>>>>>>>> /post/:id route in home-routes.js  <<<<<<<<<<<<<<<<");
+    const dbPostData = await Post.findByPk(req.params.id, {
+      include: [
+        {
+          model: Comment,
+          attributes: [
+            'id',
+            'commenter',
+            'comment_date',
+            'comment_text',
+          ],
+        },
+      ],
+    });
 
     const post = dbPostData.get({ plain: true });
-
+    console.log(post);
     res.render('post', { post, loggedIn: req.session.loggedIn });
   } catch (err) {
     console.log(err);
@@ -100,8 +112,51 @@ router.get('/post/:id', withAuth, async (req, res) => {
   }
 });
 
+// GET one comment
+// Use the custom middleware before allowing the user to access the comment
+router.get('/comment/:id', withAuth, async (req, res) => {
+  try {
+    console.log(">>>>>>>>>>>>>> /comment/:id route in home-routes.js  <<<<<<<<<<<<<<<<");
+    const dbCommentData = await Comment.findByPk(req.params.id);
+    const comment = dbCommentData.get({ plain: true });
+    console.log(comment);
+    res.render('comment', { comment, loggedIn: req.session.loggedIn });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// GET the form to create a Post
+// Use the custom middleware before allowing the user to access this route
+router.get('/post/:id', withAuth, async (req, res) => {
+  try {
+    console.log(">>>>>>>>>>>>>> /post/:id route to create a post in home-routes.js  <<<<<<<<<<<<<<<<");
+    // const dbPostData = await Post.findByPk(req.params.id, {
+    //   include: [
+    //     {
+    //       model: Comment,
+    //       attributes: [
+    //         'id',
+    //         'commenter',
+    //         'comment_date',
+    //         'comment_text',
+    //       ],
+    //     },
+    //   ],
+    // });
+
+    // const post = dbPostData.get({ plain: true });
+    // console.log(post);
+    // res.render('post', { post, loggedIn: req.session.loggedIn });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 router.get('/login', (req, res) => {
-  console.log(">>>>>>>>>>>>>>> /login redirect route <<<<<<<<<<<<<<<<<<");
+  console.log(">>>>>>>>>>>>>>> /login redirect route in home-routes.js <<<<<<<<<<<<<<<<<<");
   if (req.session.loggedIn) {
     res.redirect('/');
     return;

@@ -6,13 +6,20 @@ const commentdata = [
     comment_date: 'March 30, 2018',
     post_id: 1,
     comment_text:
-      'Comment about Variables, assignment, functions.',
+      'Here is a comment about Variables, assignment, functions.',
+  },
+  {
+  commenter: 'Harold Henry',
+  comment_date: 'March 30, 2018',
+  post_id: 1,
+  comment_text:
+    'Here is yet another comment about Variables, assignment, functions.',
   },
   {
     commenter: 'JB Parshalls',
     comment_date: 'May 05, 2017',
-    post_id: 1,
-    comment_text: 'Comment about When (and why) you should use ES6 arrow functions.',
+    post_id: 2,
+    comment_text: 'Here is a comment about When (and why) you should use ES6 arrow functions.',
   },
 ];
 console.log("commentdata: ",commentdata);

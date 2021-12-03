@@ -4,5 +4,28 @@
   <div class="post-details">
     <p>{{post.content}}</p>
   </div>
+  <section class="flex-row justify-center">
+    {{#each post.comments as |comment|}}
+    {{> comment-details}}
+    {{/each}}
+  </section>
+
   <p>(post.handlebars)</p>
 </section>
+
+  <div class="login-card">
+    <h2 class="page-title">Write a new comment</h2>
+    <form action="/users/newcomment" method="post" class="form signup-form">
+      <div class="form-group">
+        <textarea id="comment_text" name="newcomment" rows="4" cols="50">
+        </textarea>
+        <input class=hidden name='commenter' value='Henrietta'>
+        <input class=hidden name='comment_date' value='2017-05-05 04:00:00'>
+        <input class=hidden name='post_id' value='1'>
+
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
