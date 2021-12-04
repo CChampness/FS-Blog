@@ -1,6 +1,43 @@
 <section class="container">
 {{!-- <div class="topic-name"></div> --}}
-<h3 class="topic-name">Dashboard</h3>
+<div class="topic-name">
+<h3>Dashboard</h3>
+  <h2 class="page-title">Write a new post</h2>
+  <div class="form-group">
+    <form action="/api/users/newpost" method="post" class="form signup-form">
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" required>
+      <br>
+      <div>
+        <input type="radio" id="Topic1"
+        name="topic" value="JavaScript">
+        <label for="topic1">JavaScript</label>
+
+        <input type="radio" id="Topic2"
+        name="topic" value="CSS">
+        <label for="topic2">CSS</label>
+
+        <input type="radio" id="Topic3"
+        name="topic" value="HTML">
+        <label for="topic3">HTML</label>
+
+        <input type="radio" id="Topic4"
+        name="topic" value="Other">
+        <label for="topic3">Other</label>
+      </div>
+      <br>
+      <label for="post_text">New post:</label>
+      <br>
+      <textarea id="post_text" name="content" rows="4" cols="50">
+      </textarea>
+
+      <input type="hidden" name='blogger' value='Henrietta'>
+      <input type="hidden" name='post_date' value='2017-05-05 08:00:00'> {{!-- {{ format_date post.post_date}}'> --}}
+      <br>
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+  </div>
+</div>
 {{#each posts as |post|}}
 {{> post-titles}}
 {{/each}}

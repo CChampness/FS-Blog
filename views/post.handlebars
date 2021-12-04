@@ -1,9 +1,11 @@
 <section class="post">
-  <h3>{{post.title}}</h3>
+<div class="card-body">
+  <h3>Title: {{post.title}}</h3>
     <p>Posted by: {{post.blogger}} on {{ format_date post.post_date}}</p>
   <div class="post-details">
-    <p>{{post.content}}</p>
+    <p>Post: {{post.content}}</p>
   </div>
+</div>
   <section class="flex-row justify-center">
     {{#each post.comments as |comment|}}
     {{> comment-details}}
@@ -11,17 +13,18 @@
   </section>
 
   <p>(post.handlebars)</p>
+  <p>user:{{ user.username }}</p>
 </section>
 
   <div class="login-card">
     <h2 class="page-title">Write a new comment</h2>
-    <form action="/users/newcomment" method="post" class="form signup-form">
+    <form action="/api/users/newcomment" method="post" class="form signup-form">
       <div class="form-group">
-        <textarea id="comment_text" name="newcomment" rows="4" cols="50">
+        <textarea id="comment_text" name="comment_text" rows="4" cols="50">
         </textarea>
-        <input class=hidden name='commenter' value='Henrietta'>
-        <input class=hidden name='comment_date' value='2017-05-05 04:00:00'>
-        <input class=hidden name='post_id' value='1'>
+        <input type="hidden" name='commenter' value='Henrietta'>
+        <input type="hidden" name='comment_date' value='{{ format_date post.post_date}}'>
+        <input type="hidden" name='post_id' value='{{post.id}}'>
 
       </div>
       <div class="form-group">
@@ -29,3 +32,4 @@
       </div>
     </form>
   </div>
+  {{!-- <script>window.location.reload(true);</script> --}}

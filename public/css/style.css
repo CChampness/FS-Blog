@@ -159,7 +159,8 @@ img {
   text-transform: uppercase;
   letter-spacing: 3px;
   text-shadow: 2px 2px 5px var(--secondary);
-  border: 10px groove var(--light);
+  border: 5px groove var(--light);
+  border-radius: 15px;
   padding-top: 30px;
   padding-bottom: 30px;
   padding-right: 100px;
