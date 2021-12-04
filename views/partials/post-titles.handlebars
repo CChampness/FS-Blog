@@ -8,7 +8,11 @@
   </a>
   <hr>
   <button type="button">Edit post</button>
-  <button type="button" action="/api/users/deletepost" method="post">Delete post</button>
+  <form action="/api/users/deletepost" method="post" class="form">
+    <input type="hidden" name='id' value='{{id}}'>
+    <button class="btn btn-primary" type="submit">Delete post</button>
+  </form>
+
   <p>(post-titles.handlebars)</p>
 
 </section>
