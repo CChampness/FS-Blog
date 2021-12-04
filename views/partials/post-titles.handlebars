@@ -2,12 +2,13 @@
   <a href="/post/{{id}}">
     <header>{{title}}</header>
     <p>Posted by {{blogger}} on {{format_date post_date}}</p>
-    <p>{{content}}</p>
+    {{!-- <p>{{content}}</p>
     <div class="card-body">
-    </div>
+    </div> --}}
   </a>
-    <hr>
-  <p>(Most recent comment will go here)</p>
+  <hr>
+  <button type="button">Edit post</button>
+  <button type="button" action="/api/users/deletepost" method="post">Delete post</button>
   <p>(post-titles.handlebars)</p>
 
 </section>

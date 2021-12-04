@@ -7,8 +7,9 @@
     <form action="/api/users/newpost" method="post" class="form signup-form">
       <label for="title">Title</label>
       <input type="text" id="title" name="title" required>
-      <br>
+      <hr>
       <div>
+        <label for="Topic1">Topic:</label>
         <input type="radio" id="Topic1"
         name="topic" value="JavaScript">
         <label for="topic1">JavaScript</label>
@@ -25,15 +26,13 @@
         name="topic" value="Other">
         <label for="topic3">Other</label>
       </div>
-      <br>
-      <label for="post_text">New post:</label>
-      <br>
-      <textarea id="post_text" name="content" rows="4" cols="50">
+      <hr>
+      <textarea id="post_text" name="content" rows="4" cols="80" placeholder="New post...">
       </textarea>
 
       <input type="hidden" name='blogger' value='Henrietta'>
       <input type="hidden" name='post_date' value='2017-05-05 08:00:00'> {{!-- {{ format_date post.post_date}}'> --}}
-      <br>
+      <hr>
       <button class="btn btn-primary" type="submit">Submit</button>
     </form>
   </div>

@@ -118,4 +118,31 @@ router.post('/newpost', async (req, res) => {
   }
 });
 
+// Delete a new post
+// Use the custom middleware before allowing the user to access this route
+router.post('/deletepost', async (req, res) => {
+  console.log(">>>>>>>>>>>>>> delete post route <<<<<<<<<<<<<<<<");
+  console.log(">>>>>>>>>>>>>> SESSION:",req.session);
+  try {
+    const dbPostData = await Post.findOne({
+      where: {
+        id: req.body.id,
+      },
+    });
+
+    if (!dbPostData) {
+      res
+        .status(400)
+        .json({ message: 'Post not found; nothing deleted!' });
+      return;
+    }
+    res.status(200).render('dash');  //, { post, loggedIn: req.session.loggedIn });
+
+    // res.status(200).json(dbCommentData);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

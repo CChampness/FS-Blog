@@ -120,8 +120,8 @@ img {
 .card {
   margin: 20px;
   flex: 0 1 300px;
-  border: 7px double var(--dark);
-  border-radius: 10px;
+  border: 5px double var(--dark);
+  border-radius: 7px;
   background-color: var(--light);
   color: var(--dark);
 }
@@ -157,6 +157,7 @@ img {
 
 .topic-name {
   text-transform: uppercase;
+  text-align: center;
   letter-spacing: 3px;
   text-shadow: 2px 2px 5px var(--secondary);
   border: 5px groove var(--light);
