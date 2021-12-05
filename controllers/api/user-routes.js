@@ -5,7 +5,6 @@ const withAuth = require('../../utils/auth');
 
 // CREATE new user
 router.post('/', async (req, res) => {
-  console.log(">>>>>>>>>> / route for CREATE NEW USER in user-routes.js <<<<<<<<<<<<<<<<<");
   try {
     const dbUserData = await User.create({
       username: req.body.username,
@@ -27,9 +26,6 @@ router.post('/', async (req, res) => {
 
 // Login
 router.post('/login', async (req, res) => {
-  console.log(">>>>>>>>>>>>>>>>>>>>>>> /login route in user-routes.js  <<<<<<<<<<<<<<<<<");
-  console.log(">>>>>>>>>>>>>>>>>>>>>>> email:",req.body.email," <<<<<<<<<<<<<<<<<");
-  console.log(">>>>>>>>>>>>>>>>>>>>>>> password:",req.body.password," <<<<<<<<<<<<<<<<<");
   try {
     const dbUserData = await User.findOne({
       where: {
@@ -80,7 +76,6 @@ router.post('/logout', (req, res) => {
 // Create a comment
 // Use the custom middleware before allowing the user to access this route
 router.post('/newcomment', async (req, res) => {
-  console.log(">>>>>>>>>>>>>> newcomment post route <<<<<<<<<<<<<<<<");
   try {
     const dbCommentData = await Comment.create({
       commenter: req.body.commenter,
@@ -90,8 +85,6 @@ router.post('/newcomment', async (req, res) => {
     });
     console.log(">>>>>>>>>>>>>> post_id:",post_id);
     res.status(200).render('post');  //, { post, loggedIn: req.session.loggedIn });
-
-    // res.status(200).json(dbCommentData);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -100,20 +93,27 @@ router.post('/newcomment', async (req, res) => {
 
 // Create a new post
 // Use the custom middleware before allowing the user to access this route
-router.post('/newpost', async (req, res) => {
-  console.log(">>>>>>>>>>>>>> newpost post route <<<<<<<<<<<<<<<<");
-  console.log(">>>>>>>>>>>>>> SESSION:",req.session);
+router.post('/newpost', withAuth, async (req, res) => {
   try {
-    const dbPostData = await Post.create({
+    let dbPostData = await Post.create({
       title: req.body.title,
       blogger: req.body.blogger,
       post_date: req.body.post_date,
       content: req.body.content,
       topic_id: req.body.topic_id
     });
-    res.status(200).render('dash');  //, { post, loggedIn: req.session.loggedIn });
 
-    // res.status(200).json(dbCommentData);
+    dbPostData = await Post.findAll({
+      attributes: ['id','title', 'blogger','post_date','content']
+    });
+
+    const posts = dbPostData.map((post) =>
+      post.get({ plain: true })
+    );
+    res.status(200).render('dash', {
+      posts,
+      loggedIn: req.session.loggedIn,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -123,8 +123,6 @@ router.post('/newpost', async (req, res) => {
 // Delete a post
 // Use the custom middleware before allowing the user to access this route
 router.post('/deletepost', withAuth, async (req, res) => {
-  console.log(">>>>>>>>>>>>>> delete post route <<<<<<<<<<<<<<<<");
-  console.log(">>>>>>>>>>>>>> post id:",req.body.id," <<<<<<<<<<<<<<<<");
   try {
     const numDeleted = await Post.destroy({
       where: {
@@ -138,11 +136,18 @@ router.post('/deletepost', withAuth, async (req, res) => {
         .json({ message: 'Post not found; nothing deleted!' });
       return;
     }
-    console.log(">>>> /deletepost <<<<",numDeleted);
-    res.status(200).render('dash', {
-      loggedIn: req.session.loggedIn,
+
+    dbPostData = await Post.findAll({
+      attributes: ['id','title', 'blogger','post_date','content']
     });
 
+    const posts = dbPostData.map((post) =>
+      post.get({ plain: true })
+    );
+    res.status(200).render('dash', {
+      posts,
+      loggedIn: req.session.loggedIn,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -152,8 +157,6 @@ router.post('/deletepost', withAuth, async (req, res) => {
 // Update a post
 // Use the custom middleware before allowing the user to access this route
 router.post('/updatepost/:id', withAuth, async (req, res) => {
-  console.log(">>>>>>>>>>>>>> update post",req.body.post_id," route <<<<<<<<<<<<<<<<");
-  console.log(">>>>>>>>>>>>>> body:",req.body," <<<<<<<<<<<<<<<<");
   try {
     const dbPostReturn = await Post.update({content: req.body.comment_text}, {
       where: {
@@ -167,11 +170,17 @@ router.post('/updatepost/:id', withAuth, async (req, res) => {
         .json({ message: 'Post not found; nothing updated!' });
       return;
     }
-    console.log(">>>> /editpost <<<<");
-    res.status(200).render('dash', {
-      loggedIn: req.session.loggedIn,
+    dbPostData = await Post.findAll({
+      attributes: ['id','title', 'blogger','post_date','content']
     });
 
+    const posts = dbPostData.map((post) =>
+      post.get({ plain: true })
+    );
+    res.status(200).render('dash', {
+      posts,
+      loggedIn: req.session.loggedIn,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

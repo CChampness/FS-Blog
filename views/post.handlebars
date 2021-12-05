@@ -1,9 +1,12 @@
 <section class="post">
 <div class="card-body">
-  <h3>Title: {{post.title}}</h3>
+  <h3>Title of post: {{post.title}}</h3>
     <p>Posted by: {{post.blogger}} on {{ format_date post.post_date}}</p>
   <div class="post-details">
-    <p>Post: {{post.content}}</p>
+    <hr>
+    <p>Post:</p>
+    <p>{{post.content}}</p>
+    <hr>
   </div>
 </div>
   <section class="flex-row justify-center">
@@ -12,10 +15,7 @@
     {{/each}}
   </section>
 
-  <p>(post.handlebars)</p>
-  <p>user:{{ user.username }}</p>
 </section>
-
   <div class="login-card">
     <h2 class="page-title">Write a new comment</h2>
     <form action="/api/users/newcomment" method="post" class="form signup-form">
@@ -32,4 +32,3 @@
       </div>
     </form>
   </div>
-  {{!-- <script>window.location.reload(true);</script> --}}

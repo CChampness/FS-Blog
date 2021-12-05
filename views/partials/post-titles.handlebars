@@ -2,14 +2,14 @@
   <a href="/post/{{id}}">
     <header>{{title}}</header>
     <p>Posted by {{blogger}} on {{format_date post_date}}</p>
-    {{!-- <p>{{content}}</p>
+    <hr>
+    <p>{{content}}</p>
     <div class="card-body">
-    </div> --}}
+    </div>
   </a>
   <hr>
 
   <form action="/editpost/{{id}}" method="get" class="form">
-    {{!-- <input type="hidden" name='id' value='{{id}}'> --}}
     <button class="btn btn-primary" type="submit">Edit post</button>
   </form>
 
@@ -17,7 +17,4 @@
     <input type="hidden" name='id' value='{{id}}'>
     <button class="btn btn-primary" type="submit">Delete post</button>
   </form>
-
-  <p>(post-titles.handlebars)</p>
-
 </section>
