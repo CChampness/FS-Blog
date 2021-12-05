@@ -127,28 +127,16 @@ router.get('/comment/:id', withAuth, async (req, res) => {
   }
 });
 
-// GET the form to create a Post
+// GET the form to edit a Post
 // Use the custom middleware before allowing the user to access this route
-router.get('/post/:id', withAuth, async (req, res) => {
+router.get('/editpost/:id', withAuth, async (req, res) => {
   try {
-    console.log(">>>>>>>>>>>>>> /post/:id route to create a post in home-routes.js  <<<<<<<<<<<<<<<<");
-    // const dbPostData = await Post.findByPk(req.params.id, {
-    //   include: [
-    //     {
-    //       model: Comment,
-    //       attributes: [
-    //         'id',
-    //         'commenter',
-    //         'comment_date',
-    //         'comment_text',
-    //       ],
-    //     },
-    //   ],
-    // });
+    console.log(">>>>>>>>>>>>>> /editpost/:id route to edit a post in home-routes.js  <<<<<<<<<<<<<<<<");
+    const dbPostData = await Post.findByPk(req.params.id);
 
-    // const post = dbPostData.get({ plain: true });
-    // console.log(post);
-    // res.render('post', { post, loggedIn: req.session.loggedIn });
+    const post = dbPostData.get({ plain: true });
+    console.log(post);
+    res.render('post-edit', { post, loggedIn: req.session.loggedIn });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

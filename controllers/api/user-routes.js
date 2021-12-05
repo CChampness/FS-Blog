@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const { User, Post, Comment } = require('../../models');
+// Import the custom middleware
+const withAuth = require('../../utils/auth');
 
 // CREATE new user
 router.post('/', async (req, res) => {
@@ -79,7 +81,6 @@ router.post('/logout', (req, res) => {
 // Use the custom middleware before allowing the user to access this route
 router.post('/newcomment', async (req, res) => {
   console.log(">>>>>>>>>>>>>> newcomment post route <<<<<<<<<<<<<<<<");
-  console.log(">>>>>>>>>>>>>> SESSION:",req.session);
   try {
     const dbCommentData = await Comment.create({
       commenter: req.body.commenter,
@@ -87,6 +88,7 @@ router.post('/newcomment', async (req, res) => {
       comment_text: req.body.comment_text,
       post_id: req.body.post_id
     });
+    console.log(">>>>>>>>>>>>>> post_id:",post_id);
     res.status(200).render('post');  //, { post, loggedIn: req.session.loggedIn });
 
     // res.status(200).json(dbCommentData);
@@ -118,27 +120,58 @@ router.post('/newpost', async (req, res) => {
   }
 });
 
-// Delete a new post
+// Delete a post
 // Use the custom middleware before allowing the user to access this route
-router.post('/deletepost', async (req, res) => {
+router.post('/deletepost', withAuth, async (req, res) => {
   console.log(">>>>>>>>>>>>>> delete post route <<<<<<<<<<<<<<<<");
-  console.log(">>>>>>>>>>>>>> SESSION:",req.session);
+  console.log(">>>>>>>>>>>>>> post id:",req.body.id," <<<<<<<<<<<<<<<<");
   try {
-    const dbPostData = await Post.findOne({
+    const numDeleted = await Post.destroy({
       where: {
         id: req.body.id,
       },
     });
 
-    if (!dbPostData) {
+    if (!numDeleted) {
       res
         .status(400)
         .json({ message: 'Post not found; nothing deleted!' });
       return;
     }
-    res.status(200).render('dash');  //, { post, loggedIn: req.session.loggedIn });
+    console.log(">>>> /deletepost <<<<",numDeleted);
+    res.status(200).render('dash', {
+      loggedIn: req.session.loggedIn,
+    });
 
-    // res.status(200).json(dbCommentData);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// Update a post
+// Use the custom middleware before allowing the user to access this route
+router.post('/updatepost/:id', withAuth, async (req, res) => {
+  console.log(">>>>>>>>>>>>>> update post",req.body.post_id," route <<<<<<<<<<<<<<<<");
+  console.log(">>>>>>>>>>>>>> body:",req.body," <<<<<<<<<<<<<<<<");
+  try {
+    const dbPostReturn = await Post.update({content: req.body.comment_text}, {
+      where: {
+        id: req.body.post_id
+      }
+    });
+
+    if (!dbPostReturn) {
+      res
+        .status(400)
+        .json({ message: 'Post not found; nothing updated!' });
+      return;
+    }
+    console.log(">>>> /editpost <<<<");
+    res.status(200).render('dash', {
+      loggedIn: req.session.loggedIn,
+    });
+
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

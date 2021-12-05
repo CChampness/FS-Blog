@@ -7,7 +7,12 @@
     </div> --}}
   </a>
   <hr>
-  <button type="button">Edit post</button>
+
+  <form action="/editpost/{{id}}" method="get" class="form">
+    {{!-- <input type="hidden" name='id' value='{{id}}'> --}}
+    <button class="btn btn-primary" type="submit">Edit post</button>
+  </form>
+
   <form action="/api/users/deletepost" method="post" class="form">
     <input type="hidden" name='id' value='{{id}}'>
     <button class="btn btn-primary" type="submit">Delete post</button>
