@@ -39,8 +39,3 @@ app.use(routes);
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening at port ', PORT));
 });
-
-// in mini-project
-// in public/js/profile.js
-// if (response.ok) {
-//   document.location.replace('/profile');

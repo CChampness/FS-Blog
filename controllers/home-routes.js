@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Topic, Post, Comment } = require('../models');
+const Sequelize = require('sequelize');
 // Import the custom middleware
 const withAuth = require('../utils/auth');
 
@@ -67,7 +68,6 @@ router.get('/topic/:id', withAuth, async (req, res) => {
         },
       ],
     });
-
     const topic = dbTopicData.get({ plain: true });
     res.render('topic', { topic, loggedIn: req.session.loggedIn });
   } catch (err) {

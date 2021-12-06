@@ -52,9 +52,14 @@ router.post('/login', async (req, res) => {
     req.session.save(() => {
       req.session.loggedIn = true;
 
-      res
-        .status(200)
-        .json({ user: dbUserData, message: 'You are now logged in!' });
+      // res
+      //   .status(200)
+      //   .json({ user: dbUserData, message: 'You are now logged in!' });
+
+      res.status(200).render('homepage', {
+        loggedIn: req.session.loggedIn,
+      });
+ 
     });
   } catch (err) {
     console.log(err);
@@ -76,8 +81,6 @@ router.post('/logout', (req, res) => {
 // Create a comment
 // Use the custom middleware before allowing the user to access this route
 router.post('/newcomment', withAuth, async (req, res) => {
-  console.log(">>>>>>>>>>>>>>> /newcomment post route <<<<<<<<<<<<<<<");
-  console.log("req.body:", req.body);
   try {
     let dbCommentData = await Comment.create({
       commenter: req.body.commenter,
@@ -86,56 +89,22 @@ router.post('/newcomment', withAuth, async (req, res) => {
       post_id: req.body.post_id
     });
 
-    // dbCommentData = await Comment.findAll({
-    //   where: {
-    //     post_id: req.body.post_id
-    //   }
-    // });
+    const dbPostData = await Post.findByPk(req.body.post_id, {
+      include: [
+        {
+          model: Comment,
+          attributes: [
+            'id',
+            'commenter',
+            'comment_date',
+            'comment_text',
+          ],
+        },
+      ],
+    });
 
-    // const comments = dbCommentData.map((comment) =>
-    //   comment.get({ plain: true })
-    // );
-    // console.log("comments going back to client from /newcomment",comments);
-
-    // res.status(200).render('post', {
-    //   comments,
-    //   loggedIn: req.session.loggedIn
-    // });
-
-    // dbPostData = await Post.findAll({
-    //   attributes: ['id','title', 'blogger','post_date','content']
-    // });
-
-    // const posts = dbPostData.map((post) =>
-    //   post.get({ plain: true })
-    // );
-    // res.status(200).render('dash', {
-    //   posts,
-    //   loggedIn: req.session.loggedIn,
-    // });
-//////////////////
-  const dbPostData = await Post.findByPk(req.body.post_id, {
-    include: [
-      {
-        model: Comment,
-        attributes: [
-          'id',
-          'commenter',
-          'comment_date',
-          'comment_text',
-        ],
-      },
-    ],
-  });
-
-  const post = dbPostData.get({ plain: true });
-  res.render('post', { post, loggedIn: req.session.loggedIn });
-// } catch (err) {
-//   console.log(err);
-//   res.status(500).json(err);
-// }
-
-//////////////////
+    const post = dbPostData.get({ plain: true });
+    res.render('post', { post, loggedIn: req.session.loggedIn });
 
   } catch (err) {
     console.log(err);
@@ -162,7 +131,7 @@ router.post('/newpost', withAuth, async (req, res) => {
     const posts = dbPostData.map((post) =>
       post.get({ plain: true })
     );
-    console.log("posts goint back to client from /newpost",posts);
+
     res.status(200).render('dash', {
       posts,
       loggedIn: req.session.loggedIn,

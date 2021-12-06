@@ -14,21 +14,20 @@
     {{> comment-details}}
     {{/each}}
   </section>
-<h2>(post.handlebars)</h2>
 </section>
-  <div class="login-card">
-    <h2 class="page-title">Write a new comment</h2>
-    <form action="/api/users/newcomment" method="post" class="form signup-form">
-      <div class="form-group">
-        <textarea id="comment_text" name="comment_text" rows="4" cols="50">
-        </textarea>
-        <input type="hidden" name='commenter' value='Henrietta'>
-        <input type="hidden" name='comment_date' value='{{ format_date post.post_date}}'>
-        <input type="hidden" name='post_id' value='{{post.id}}'>
+<div class="login-card">
+  <h2 class="page-title">Write a new comment</h2>
+  <form action="/api/users/newcomment" method="post" class="form signup-form">
+    <div class="form-group">
+      <textarea id="comment_text" name="comment_text" rows="4" cols="50">
+      </textarea>
+      <input type="hidden" name='commenter' value='Henrietta'>
+      <input type="hidden" name='comment_date' value='{{ format_date post.post_date}}'>
+      <input type="hidden" name='post_id' value='{{post.id}}'>
 
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">Submit</button>
-      </div>
-    </form>
-  </div>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+  </form>
+</div>

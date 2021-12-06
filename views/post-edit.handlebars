@@ -1,24 +1,21 @@
 <section class="post">
-<div class="card-body">
-  <h3>Title: {{post.title}}</h3>
+  <div class="card-body">
+    <h3>Title: {{post.title}}</h3>
     <p>Posted by: {{post.blogger}} on {{ format_date post.post_date}}</p>
-</div>
-
-  {{!-- <p>(post-edit.handlebars)</p> --}}
+  </div>
 </section>
 
-  <div class="login-card">
-    <h2 class="page-title">Edit post</h2>
-    <form action="/api/users/updatepost/{{post.id}}" method="post" class="form signup-form">
-      <div class="form-group">
-        <textarea id="comment_text" name="comment_text" rows="4" cols="50">
-          {{post.content}}
-        </textarea>
-        <input type="hidden" name='post_id' value='{{post.id}}'>
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">Update post</button>
-      </div>
-    </form>
-  </div>
-  {{!-- <script>window.location.reload(true);</script> --}}
+<div class="login-card">
+  <h2 class="page-title">Edit post</h2>
+  <form action="/api/users/updatepost/{{post.id}}" method="post" class="form signup-form">
+    <div class="form-group">
+      <textarea id="comment_text" name="comment_text" rows="4" cols="50">
+        {{post.content}}
+      </textarea>
+      <input type="hidden" name='post_id' value='{{post.id}}'>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit">Update post</button>
+    </div>
+  </form>
+</div>

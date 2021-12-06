@@ -5,28 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tech Blog</title>
-  {{!-- <link rel="stylesheet" type="text/css" href="/css/jass.css"> --}}
   <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
   <header>
     <h1>Welcome to the Full Stack Tech Blog</h1>
+    <h2>(main.handlebars)</h2>
   </header>
   <nav>
     <a href="/">Home</a>
     <a href="/dash">Dashboard</a>
     {{#if loggedIn}}
+    <h2>logged In</h2>
     <button id="logout" class="btn-no-style">Logout</button>
-    {{!-- <button id="logout">Logout</button> --}}
     {{else}}
+    <h2>NOT logged In</h2>
     <a href="/login">Login</a>
     {{/if}}
   </nav>
   <main>
-    {{!-- <aside>
-      <h2>Enjoy the blog!</h2>
-    </aside> --}}
     <div class="topic">
       {{{body}}}
     </div>
@@ -35,5 +33,4 @@
   <script src="../../js/logout.js"></script>
   {{/if}}
 </body>
-<p>(main.handlebars)</p>
 </html>
