@@ -75,7 +75,9 @@ router.post('/logout', (req, res) => {
 
 // Create a comment
 // Use the custom middleware before allowing the user to access this route
-router.post('/newcomment', async (req, res) => {
+router.post('/newcomment', withAuth, async (req, res) => {
+  console.log(">>>>>>>>>>>>>>> /newcomment post route <<<<<<<<<<<<<<<");
+  console.log("req.body:", req.body);
   try {
     const dbCommentData = await Comment.create({
       commenter: req.body.commenter,
@@ -83,8 +85,14 @@ router.post('/newcomment', async (req, res) => {
       comment_text: req.body.comment_text,
       post_id: req.body.post_id
     });
-    console.log(">>>>>>>>>>>>>> post_id:",post_id);
-    res.status(200).render('post');  //, { post, loggedIn: req.session.loggedIn });
+
+    const dbPostData = await Post.findByPk(req.body.post_id);
+    const post = dbPostData.get({ plain: true });
+
+    res.status(200).render('post', {
+      post,
+      loggedIn: req.session.loggedIn
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

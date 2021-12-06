@@ -1008,14 +1008,14 @@ a:hover {
   text-align: center;
 }
 
-.btn.btn-primary {
+/* .btn.btn-primary {
   background-color: #2d3e50;
   color: #d9e9e8;
 }
 
 .btn.btn-primary:hover {
   background-color: #57779a;
-}
+} */
 
 .btn.btn-danger {
   background-color: #e64c66;
