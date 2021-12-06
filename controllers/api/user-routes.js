@@ -79,20 +79,64 @@ router.post('/newcomment', withAuth, async (req, res) => {
   console.log(">>>>>>>>>>>>>>> /newcomment post route <<<<<<<<<<<<<<<");
   console.log("req.body:", req.body);
   try {
-    const dbCommentData = await Comment.create({
+    let dbCommentData = await Comment.create({
       commenter: req.body.commenter,
       comment_date: req.body.comment_date,
       comment_text: req.body.comment_text,
       post_id: req.body.post_id
     });
 
-    const dbPostData = await Post.findByPk(req.body.post_id);
-    const post = dbPostData.get({ plain: true });
+    // dbCommentData = await Comment.findAll({
+    //   where: {
+    //     post_id: req.body.post_id
+    //   }
+    // });
 
-    res.status(200).render('post', {
-      post,
-      loggedIn: req.session.loggedIn
-    });
+    // const comments = dbCommentData.map((comment) =>
+    //   comment.get({ plain: true })
+    // );
+    // console.log("comments going back to client from /newcomment",comments);
+
+    // res.status(200).render('post', {
+    //   comments,
+    //   loggedIn: req.session.loggedIn
+    // });
+
+    // dbPostData = await Post.findAll({
+    //   attributes: ['id','title', 'blogger','post_date','content']
+    // });
+
+    // const posts = dbPostData.map((post) =>
+    //   post.get({ plain: true })
+    // );
+    // res.status(200).render('dash', {
+    //   posts,
+    //   loggedIn: req.session.loggedIn,
+    // });
+//////////////////
+  const dbPostData = await Post.findByPk(req.body.post_id, {
+    include: [
+      {
+        model: Comment,
+        attributes: [
+          'id',
+          'commenter',
+          'comment_date',
+          'comment_text',
+        ],
+      },
+    ],
+  });
+
+  const post = dbPostData.get({ plain: true });
+  res.render('post', { post, loggedIn: req.session.loggedIn });
+// } catch (err) {
+//   console.log(err);
+//   res.status(500).json(err);
+// }
+
+//////////////////
+
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -118,6 +162,7 @@ router.post('/newpost', withAuth, async (req, res) => {
     const posts = dbPostData.map((post) =>
       post.get({ plain: true })
     );
+    console.log("posts goint back to client from /newpost",posts);
     res.status(200).render('dash', {
       posts,
       loggedIn: req.session.loggedIn,
