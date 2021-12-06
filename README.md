@@ -38,5 +38,9 @@ Blog for Full Stack tech thoughts and comments
 * When a user clicks on the logout option in the navigation, they get signed out of the site.
 
 * When the user is idle on the site for more than a set time, then they will be able to view comments but they will be prompted to log in again before they can add, update, or delete comments.
-               MENTION HERE HOW LONG THE TIMEOUT IS
 ```
+## Repo
+The repository for the app is here: https://github.com/CChampness/FS-Blog
+
+## Deployed app on Heroku:
+https://git.heroku.com/shielded-journey-82964.git
