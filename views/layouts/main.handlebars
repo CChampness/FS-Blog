@@ -11,16 +11,13 @@
 <body>
   <header>
     <h1>Welcome to the Full Stack Tech Blog</h1>
-    <h2>(main.handlebars)</h2>
   </header>
   <nav>
     <a href="/">Home</a>
     <a href="/dash">Dashboard</a>
     {{#if loggedIn}}
-    <h2>logged In</h2>
     <button id="logout" class="btn-no-style">Logout</button>
     {{else}}
-    <h2>NOT logged In</h2>
     <a href="/login">Login</a>
     {{/if}}
   </nav>
