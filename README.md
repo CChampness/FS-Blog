@@ -43,4 +43,4 @@ Blog for Full Stack tech thoughts and comments
 The repository for the app is here: https://github.com/CChampness/FS-Blog
 
 ## Deployed app on Heroku:
-https://git.heroku.com/shielded-journey-82964.git
+https://shielded-journey-82964.herokuapp.com/
