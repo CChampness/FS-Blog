@@ -4,7 +4,6 @@
     <p>Posted by: {{post.blogger}} on {{ format_date post.post_date}}</p>
   </div>
 </section>
-<h2>USER:{{req.session.user_id}}</h2>
 <div class="login-card">
   <h2 class="page-title">Edit post</h2>
   <form action="/api/users/updatepost/{{post.id}}" method="post" class="form signup-form">
