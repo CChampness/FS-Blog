@@ -39,6 +39,11 @@ Blog for Full Stack tech thoughts and comments
 
 * When the user is idle on the site for more than a set time, then they will be able to view comments but they will be prompted to log in again before they can add, update, or delete comments.
 ```
+## Snapshot
+Here is a snapshot of the home page of the Full Stack Tech Blog:
+
+![FS-techblog](FS-techblog.png)
+
 ## Repo
 The repository for the app is here: https://github.com/CChampness/FS-Blog
 
